@@ -10,11 +10,12 @@
 
 typedef struct sockaddr SA;
 
-#define  DATALINE 10
-
+#define DATALINE 10
+#define CODELINE 10
+#define MAX_INPUT_SYMBOL_NUM 10000
 
 void usage(char *command);
 
 void Socket(int *sock_id);
 
-void Fopen(FILE *fp, char*param);
+void Fopen(FILE **fp, char*param);

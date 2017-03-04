@@ -16,9 +16,9 @@ void Socket(int *sock_id)
 	}
 }
 
-void Fopen(FILE *fp, char *param)
+void Fopen(FILE **fp, char *param)
 {	
-	if((fp = fopen(param, "r")) == NULL)
+	if((*fp = fopen(param, "r")) == NULL)
 	{
 		printf("Fopen file failed\n");
 		exit(0);

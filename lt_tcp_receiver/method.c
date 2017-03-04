@@ -14,9 +14,9 @@ void Socket(int *sock_id)
 	}
 }
 
-void Fopen(FILE *fp, char *param)
+void Fopen(FILE **fp, char *param)
 {
-	if((fp = fopen(param, "r")) == NULL)
+	if((*fp = fopen(param, "w")) == NULL)
 	{
 		perror("Open file failed\n");
 		exit(0);

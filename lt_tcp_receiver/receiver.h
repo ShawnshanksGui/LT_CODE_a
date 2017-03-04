@@ -11,12 +11,12 @@
 
 typedef struct sockaddr SA;
 
-#define RECLINE 20
+#define RECLINE 10
 
 void usage(char *command);
 
 void Socket(int *sock_id);
 
-void Fopen(FILE *fp, char *param);
+void Fopen(FILE **fp, char *param);
 
 void Bind(int sock_id, SA *ptr_addr, int len);
