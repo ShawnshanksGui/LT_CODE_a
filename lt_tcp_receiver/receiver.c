@@ -27,6 +27,9 @@ int main(int argc, char *argv[])
 	
 	assert(fp != NULL); 
 
+/***************************************************/
+	//prepare for socket and bind
+
 	Socket(&sock_id);
 	
 	memset(&serv_addr, 0, sizeof(serv_addr));
@@ -35,6 +38,8 @@ int main(int argc, char *argv[])
 	serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	Bind(sock_id, (SA*)&serv_addr, sizeof(serv_addr));
+/***************************************************/
+
 
 //	printf("%d\n", sock_id);	
 	fwrite("aaaaaaaaaa",sizeof(char), 10, fp);
