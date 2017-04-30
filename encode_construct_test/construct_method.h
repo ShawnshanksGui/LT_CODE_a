@@ -17,8 +17,6 @@
 #include "errno.h"
 #include <unistd.h>
 
-#include <sys/time.h>
-
 #include <sys/types.h>
 #include <sys/socket.h>
 
@@ -26,9 +24,8 @@
 #include <arpa/inet.h>
 
 typedef struct sockaddr SA;
-#define CODELINE 20
+#define CODELINE 100
 #define MAX_INDEX_LIST 80
-
 //#define MAX_BYTE_LIST 10 //index storaged as bit 
 //#define MAX_INPUT_SYMBOL_NUM 80
 //#define LEN_EN_PACKET  112
@@ -42,13 +39,17 @@ typedef struct sockaddr SA;
 //******************************
 #endif
 
+/*
+#define C_ROBUST_SLT_DISTRI 0.1
+#define DELTA 0.5
+*/
+
 #define C_ROBUST_SLT_DISTRI 0.1
 #define DELTA 0.5
 
 #define YES 1
 #define NO 0
 
-#define PACKET_LOSS_RATE   0.05
 //*******************************
 //*******decoder**********
 #define MAX_EN_SYMBOL_RECV 16000
@@ -110,13 +111,11 @@ void interval_judge(int *, double, double *, int);
 void get_cdf_final(double *, int);
 
 void get_d(int *, double *, int);
-void get_d_one(int *);
 /********************************/
 
 /**************************************/
 //get_index
 void get_index(int *, int, int);
-void get_index_one(int *, int, int);
 /*************************************/
 
 /*************************************/
@@ -126,10 +125,6 @@ void set_packet_sent(char *, char *, int *, int);
 void encode_lt(char symbol_raw[][CODELINE], char *, int, double *);
 void get_raw_source(char buf[][CODELINE], int);
 
-//***************************************
-//transmit over channel
-int transmit_over_ch();
-//***************************************
 
 //decode part
 /****************************************/
@@ -149,5 +144,3 @@ int  decode(char *, char symbol_recover[][CODELINE]);
 /*****************************************/
 
 #endif
-
-

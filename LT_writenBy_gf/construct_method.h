@@ -26,9 +26,8 @@
 #include <arpa/inet.h>
 
 typedef struct sockaddr SA;
-#define CODELINE 20
-#define MAX_INDEX_LIST 80
-
+#define CODELINE 200
+#define MAX_INDEX_LIST 8
 //#define MAX_BYTE_LIST 10 //index storaged as bit 
 //#define MAX_INPUT_SYMBOL_NUM 80
 //#define LEN_EN_PACKET  112
@@ -62,7 +61,7 @@ typedef unsigned int  uint;
 typedef struct symbol{
     int d;
 	char data[CODELINE];
-	int index[MAX_INDEX_LIST];
+	int index[MAX_INDEX_LIST]; 
 }en_symbol;
 
 //**********************

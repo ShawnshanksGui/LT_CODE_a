@@ -1,11 +1,5 @@
 #include "construct_method.h"
 
-#include "stdio.h"
-#include "math.h"
-#include "assert.h"
-#include "stdlib.h"
-
-/*
 void usage(char *command)
 {
 	printf("usage:%s receiver_port\n", command);
@@ -38,6 +32,28 @@ void Fopen_for_read(FILE **fp, char *param)
 	}
 }
 
+size_t Fread(void *ptr, int size, int n, FILE *fp)
+{
+	int n_read = 0;
+	if((n_read = fread(ptr, (size_t)size, (size_t)n, fp)) <= 0)
+	{
+		perror("fread falied");
+		exit(0);
+	}
+	return n_read;
+}
+
+size_t Fwrite(void *ptr, int size, int n, FILE *fp)
+{
+	int n_write = 0;
+	if((n_write = fwrite(ptr, (size_t)size, (size_t)n, fp)) <= 0)
+	{
+		perror("fwrite failed");
+		exit(0);
+	}
+	return n_write;
+}
+
 void Bind(int sock_id, SA *ptr_addr, int len)
 {
 	if(bind(sock_id, ptr_addr, len) < 0)
@@ -46,7 +62,7 @@ void Bind(int sock_id, SA *ptr_addr, int len)
 		exit(0);
 	}
 }
-*/
+
 /****************************************************/
 double get_tau(int i, int k)
 {
@@ -191,7 +207,7 @@ void get_index(int *index, int d, int k)
 		while(!flag_success)
 		{
 			flag_success = 1;
-			num = random()%k;
+			num = random()%k + 1;
 			for(j = 0; j < i; j++)
 			{
 				if(num == index[j])
@@ -214,26 +230,85 @@ void get_data(char symbol_raw[][CODELINE], struct symbol *ptr)
 	for(i = 0; i < ptr->d; i++)
 	{
 		for(j = 0; j < CODELINE; j++)
-			ptr->data[j] ^= symbol_raw[ptr->index[i]][j]; //module 2 + operator
+			ptr->data[j] ^= symbol_raw[(ptr->index[i])-1][j]; //module 2 + operator
 	}
 }
 
+
+
+void
+set_packet_sent(char *en_symbol, char *en_packet, int *en_list, int d)
+{
+//	int num_byte_list = 0;
+	int i = 0;
+
+//	num_byte_list = ceil(d/8);
+
+	en_packet[0] = d;
+	for(i = 0; i < d; i++)
+		en_packet[2+((en_list[i]-1)/8)] |= (unsigned char)1 
+				<< ((en_list[i]-1)%8);
+
+	for(i = 0; i < CODELINE; i++)
+		en_packet[2 + MAX_BYTE_LIST + i] = en_symbol[i];
+}
+
+
+void 
+encode_lt(char symbol_raw[][CODELINE],char *en_packet,int k, double *cdf)
+{
+	struct symbol *ptr_struct_ensym;
+	ptr_struct_ensym = (struct symbol*)malloc(sizeof(struct symbol));
+	memset(ptr_struct_ensym, 0, sizeof(struct symbol));
+
+	get_d(&(ptr_struct_ensym->d), cdf, k);
+	get_index(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
+	get_data(symbol_raw, ptr_struct_ensym);
+	set_packet_sent(ptr_struct_ensym->data, en_packet, 
+					ptr_struct_ensym->index, ptr_struct_ensym->d);
+}
+
+void get_raw_source(char buf[][CODELINE], int symbol_num)
+{
+	FILE *fp         = NULL;
+	int readlen      = 0;
+	int i            = 0;
+	char *ptr_char   = NULL;
+	int _input_limit = 0;;  
+	
+//	Fopen_for_read(&fp, "hello.txt");
+
+	ptr_char     = buf[i];
+	_input_limit = MAX_INPUT_SYMBOL_NUM;
+
+	Fopen_for_read(&fp, "hello.txt");
+
+	while((readlen = fread(ptr_char, sizeof(char), CODELINE, fp)) > 0)
+	{	
+		i++;
+		if(i >= _input_limit || i >= symbol_num)
+		{
+			break;
+		}
+		ptr_char = buf[i];
+	}
+}
+
+/**************************************************/
+/**************************************************/
+/*
 int main()
 {
-	char symbol_raw[10][10] = {1,1,0,0,0,0,0,0,0,1};
+	char symbol_raw[10][200] = {1,1,0,0,0,0,0,0,0,1};
 	struct symbol ensymbol = {10, {0,0,0,0,0,1,1,1,1,1}, 
 							 {0,1,2,3,4,5,6,7,8,9}};
-	struct symbol *ptr;
-	*ptr = ensymbol;
-	get_data(symbol_raw, ptr);
+//	struct symbol *ptr;
+//	*ptr = ensymbol;
+	get_data(symbol_raw, &ensymbol);
 
 	return 0;
 }
+*/
 /****************************************************/
-
-
-
-
-
-
+/****************************************************/
 

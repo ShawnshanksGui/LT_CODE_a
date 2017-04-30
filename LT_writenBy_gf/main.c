@@ -43,23 +43,24 @@ int main()
 	double _cdf[MAX_INPUT_SYMBOL_NUM + 1] = {0.0}; 
 	char en_packet[LEN_EN_PACKET] = {'\0'};
 
-	char sym_presv[MAX_INPUT_SYMBOL_NUM][CODELINE];
+	char sym_presv[2*MAX_INPUT_SYMBOL_NUM][CODELINE];
 
 	char source_array[MAX_INPUT_SYMBOL_NUM][CODELINE];
 //	memset(source_array, 0, sizeof(source_array));
 
 	FILE *fp ;
-
+	
+	srand((int)time(NULL));
 	memset(source_array, 0, sizeof(source_array));
-
+/*
 	Fopen_for_write(&fp, "hello.txt");
 	for(i = 0; i < MAX_INPUT_SYMBOL_NUM; i++)
 		for(k = 0; k < CODELINE; k++)
 		{
-			tmp = 'a' + (random() % 25);
+			tmp = 'a' + (rand() % 25) + 1;
 			Fwrite(&tmp, sizeof(char), 1, fp);			
 		}
-
+*/
 
 	struct timeval starttime,endtime;
 	double timepast;
@@ -72,7 +73,7 @@ int main()
 //{
 	get_cdf_final(_cdf, MAX_INPUT_SYMBOL_NUM);
 
-	while(sign_sucs == 0 && num_sent < 12000)
+	while(sign_sucs == 0 && num_sent < 1200000)
 	{	
 		memset(en_packet, 0, sizeof(en_packet));
 		encode_lt(source_array, en_packet, MAX_INPUT_SYMBOL_NUM, _cdf);
@@ -85,16 +86,21 @@ int main()
 		num_sent++;
 		sent_real++;
 		sign_sucs = decode(en_packet, sym_presv);
-
-		//test
-		printf("num_sent = %d\n", num_sent);
-		printf("sent_real = %d\n", sent_real);
-	}
 		
+		//test
+////		printf("num_sent = %d,  ", num_sent);
+////		printf("sent_real = %d\n", sent_real);
+	}
+
+	//redundancy of the result!!!!
+	printf("num_sent = %d,  ", num_sent);
+	printf("input_symbol = %d\n", MAX_INPUT_SYMBOL_NUM);
+	printf("the redundancy == %lf\n", (num_sent-MAX_INPUT_SYMBOL_NUM)/(float)MAX_INPUT_SYMBOL_NUM);		
+
 	gettimeofday(&endtime,NULL);
 	timepast=((double)(endtime.tv_sec-starttime.tv_sec)*1000000
 		     +(double)(endtime.tv_usec-starttime.tv_usec))/1000000;
-	printf("the whole processing time of the program is %lf seconds\n",timepast);
+////	printf("the whole processing time of the program is %lf seconds\n",timepast);
 //}
 	return 0;
 }		
