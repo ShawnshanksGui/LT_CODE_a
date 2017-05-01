@@ -282,7 +282,7 @@ void get_index_one(int *index, int d, int k)
 //				num = random()%k + 1;
 //modified by gf,
 //data:2017.04.30,
-//correct the method of raadom number.
+//correct the method of random number.
 				num = rand() % k + 1;
 //**************************************
 				for(j = 0; j < i; j++)
@@ -336,10 +336,10 @@ encode_lt(char symbol_raw[][CODELINE],char *en_packet,int k, double *cdf)
 {
 	struct symbol *ptr_struct_ensym;
 	ptr_struct_ensym = (struct symbol*)malloc(sizeof(struct symbol));
-get_d(&(ptr_struct_ensym->d), cdf, k);
+get_d_one(&(ptr_struct_ensym->d));
 //	get_d_one(&(ptr_struct_ensym->d));
 
-get_index(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
+get_index_one(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
 //	get_index_one(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
 	get_data(symbol_raw, ptr_struct_ensym);
 	set_packet_sent(ptr_struct_ensym->data, en_packet, 

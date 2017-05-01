@@ -27,7 +27,7 @@
 
 typedef struct sockaddr SA;
 #define CODELINE 200
-#define MAX_INDEX_LIST 8
+#define MAX_INDEX_LIST 120
 //#define MAX_BYTE_LIST 10 //index storaged as bit 
 //#define MAX_INPUT_SYMBOL_NUM 80
 //#define LEN_EN_PACKET  112
@@ -41,7 +41,7 @@ typedef struct sockaddr SA;
 //******************************
 #endif
 
-#define C_ROBUST_SLT_DISTRI 0.1
+#define C_ROBUST_SLT_DISTRI 0.5
 #define DELTA 0.5
 
 #define YES 1

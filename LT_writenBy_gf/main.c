@@ -50,8 +50,11 @@ int main()
 
 	FILE *fp ;
 	
-	srand((int)time(NULL));
+	srand((int)time(NULL));  // why can only palce srand in there???
 	memset(source_array, 0, sizeof(source_array));
+
+//***************************************************
+//*you'd better cancel this block of code when you are debugging
 /*
 	Fopen_for_write(&fp, "hello.txt");
 	for(i = 0; i < MAX_INPUT_SYMBOL_NUM; i++)
@@ -61,7 +64,7 @@ int main()
 			Fwrite(&tmp, sizeof(char), 1, fp);			
 		}
 */
-
+//********************************************************
 	struct timeval starttime,endtime;
 	double timepast;
 

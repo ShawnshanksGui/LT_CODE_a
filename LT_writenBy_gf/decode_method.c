@@ -189,7 +189,7 @@ int decode(char *ptr_packet, char symbol_recover[][CODELINE])
 	
 	de_symbol *sym_from_ripple;
 	
-	static char sign[MAX_BYTE_LIST] = {'\0'}; 
+//	static char sign[MAX_BYTE_LIST] = {'\0'}; 
 	//sign of success:all bits are 1
 	static int _addr_buf   	    = 0;
 	static int _addr_rip_insert = 0;
@@ -197,7 +197,6 @@ int decode(char *ptr_packet, char symbol_recover[][CODELINE])
 		
 //	static struct rip ripple = {{0},{0}};
 	static struct rip ripple;
-
 	static de_symbol de_buf[MAX_EN_SYMBOL_RECV];
 //	memset(de_buf, 0, sizeof(de_symbol));
 
@@ -318,7 +317,7 @@ int decode(char *ptr_packet, char symbol_recover[][CODELINE])
 			//	sign_sucs((get_id(*sym_from_ripple)), sign);
 			}
 		}
-		sign_success = success_judge_recvry(sign);
+//		sign_success = success_judge_recvry(sign);
 
 		if(_addr_rip_procs >= _addr_rip_insert && 0 == num_procs)
 			break;  //waiting for next packet to recover!!!!!!!
