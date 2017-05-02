@@ -26,7 +26,7 @@
 #include <arpa/inet.h>
 
 typedef struct sockaddr SA;
-#define CODELINE 200
+#define CODELINE 1024
 #define MAX_INDEX_LIST 120
 //#define MAX_BYTE_LIST 10 //index storaged as bit 
 //#define MAX_INPUT_SYMBOL_NUM 80
@@ -47,7 +47,7 @@ typedef struct sockaddr SA;
 #define YES 1
 #define NO 0
 
-#define PACKET_LOSS_RATE   0.05
+#define PACKET_LOSS_RATE   0.05  //packet loss rate
 //*******************************
 //*******decoder**********
 #define MAX_EN_SYMBOL_RECV 16000

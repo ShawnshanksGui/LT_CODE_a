@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #######################semi-random edition######################
-echo "semi-random edition!!!!!!!!!!!!!!:\n"
-echo "semi-random edition!!!!!!!!!!!!!!:\n"
+echo "semi-random edition!!!!!!!!!!!!!!:" >> result.txt # record the result
+echo "semi-random edition!!!!!!!!!!!!!!:\n" #display the screen of user
 sed -i '339c get_d_one(&(ptr_struct_ensym->d));' encode_method.c
 sed -i '342c get_index_one(ptr_struct_ensym->index, ptr_struct_ensym->d, k);' encode_method.c
 

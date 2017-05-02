@@ -32,6 +32,15 @@ void Fopen_for_read(FILE **fp, char *param)
 	}
 }
 
+void Fopen_for_write_not_cover_origin(FILE **fp, char *param)
+{
+	if((*fp = fopen(param, "a+")) == NULL)
+	{
+      	perror("Open file failed\n");
+		exit(0);
+	}
+}
+
 size_t Fread(void *ptr, int size, int n, FILE *fp)
 {
 	int n_read = 0;
@@ -232,9 +241,7 @@ void get_index(int *index, int d, int k)
 			for(j = 0; j < i; j++)
 			{
 				if(num == index[j])
-				{
 					 flag_success = 0;
-				}
 			}
 		}
 		index[i] = num;
@@ -252,7 +259,6 @@ void get_index_one(int *index, int d, int k)
 	int flag_success = 0;
 
 //	srand((int)time(0));
-
 	if(d == 1)
 	{
 		/*
@@ -261,10 +267,8 @@ void get_index_one(int *index, int d, int k)
 			flag_success = 1;
 			num = random()%k + 1;
 			for(i = 0;i < count; i++)
-			{
-				if(num == index_mem[i])
+			if(num == index_mem[i])
 					flag_success = 0;
-			}
 		}
 		index[0] = num;
 		index_mem[count++] = num;
@@ -298,6 +302,7 @@ void get_index_one(int *index, int d, int k)
 		}
 	}
 }
+
 void get_data(char symbol_raw[][CODELINE], struct symbol *ptr)
 {
 	int i = 0;
@@ -310,10 +315,7 @@ void get_data(char symbol_raw[][CODELINE], struct symbol *ptr)
 	}
 }
 
-
-
-void
-set_packet_sent(char *en_symbol, char *en_packet, int *en_list, int d)
+void set_packet_sent(char *en_symbol, char *en_packet, int *en_list, int d)
 {
 //	int num_byte_list = 0;
 	int i = 0;
@@ -329,17 +331,15 @@ set_packet_sent(char *en_symbol, char *en_packet, int *en_list, int d)
 		en_packet[2 + MAX_BYTE_LIST + i] = en_symbol[i];
 }
 
-
-
-void 
-encode_lt(char symbol_raw[][CODELINE],char *en_packet,int k, double *cdf)
+void encode_lt(char symbol_raw[][CODELINE],char *en_packet,int k, double *cdf)
 {
 	struct symbol *ptr_struct_ensym;
 	ptr_struct_ensym = (struct symbol*)malloc(sizeof(struct symbol));
-get_d_one(&(ptr_struct_ensym->d));
+
+get_d(&(ptr_struct_ensym->d), cdf, k);
 //	get_d_one(&(ptr_struct_ensym->d));
 
-get_index_one(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
+get_index(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
 //	get_index_one(ptr_struct_ensym->index, ptr_struct_ensym->d, k);
 	get_data(symbol_raw, ptr_struct_ensym);
 	set_packet_sent(ptr_struct_ensym->data, en_packet, 

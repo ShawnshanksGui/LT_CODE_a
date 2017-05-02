@@ -56,13 +56,16 @@ int main()
 //***************************************************
 //*you'd better cancel this block of code when you are debugging
 /*
-	Fopen_for_write(&fp, "hello.txt");
+**********************generate hello.txt*******************/
+/*	Fopen_for_write(&fp, "hello.txt");
 	for(i = 0; i < MAX_INPUT_SYMBOL_NUM; i++)
 		for(k = 0; k < CODELINE; k++)
 		{
 			tmp = 'a' + (rand() % 25) + 1;
 			Fwrite(&tmp, sizeof(char), 1, fp);			
 		}
+*/
+/***********************************************************
 */
 //********************************************************
 	struct timeval starttime,endtime;
@@ -100,11 +103,20 @@ int main()
 	printf("input_symbol = %d\n", MAX_INPUT_SYMBOL_NUM);
 	printf("the redundancy == %lf\n", (num_sent-MAX_INPUT_SYMBOL_NUM)/(float)MAX_INPUT_SYMBOL_NUM);		
 
+//	Fopen_for_write(&fp, "result.txt");
+	Fopen_for_write_not_cover_origin(&fp, "result.txt");
+	fprintf(fp, "num_sent = %d,  ", num_sent);
+	fprintf(fp, "input_symbol = %d\n", MAX_INPUT_SYMBOL_NUM);
+	fprintf(fp, "the redundancy == %lf\n", (num_sent-MAX_INPUT_SYMBOL_NUM)/(float)MAX_INPUT_SYMBOL_NUM);
+
+//************************************************
+//************************************************
 	gettimeofday(&endtime,NULL);
 	timepast=((double)(endtime.tv_sec-starttime.tv_sec)*1000000
 		     +(double)(endtime.tv_usec-starttime.tv_usec))/1000000;
 ////	printf("the whole processing time of the program is %lf seconds\n",timepast);
 //}
+
 	return 0;
 }		
 
